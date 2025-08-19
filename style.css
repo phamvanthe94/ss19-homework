@@ -1,86 +1,130 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background: linear-gradient(to bottom, #3ed8ff, #1e69de);
+  background: #4b2c82;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+#show-modal {
+  font-size: 20px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+#bookmarks-container {
+  margin-top: 30px;
   display: flex;
-  justify-self: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bookmark a {
+  color: white;
+  text-decoration: none;
+  display: flex;
   align-items: center;
-  height: 100vh;
+  gap: 5px;
 }
 
-.container {
-  background-color: #fff;
+.bookmark .delete {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #f5f5f5;
   padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: black;
+  width: 320px;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.todo-container h2 {
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
+.modal-content h3 {
+  background-color: #6c4ab6;
+  color: white;
+  margin: -20px -20px 15px -20px;
+  padding: 15px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-size: 18px;
   text-align: center;
 }
 
-.input-section {
-  display: flex;
+form label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+form input {
+  width: 100%;
+  padding: 8px;
   margin-bottom: 15px;
-  margin-top: 10px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
 }
 
-#todo-input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 5px 0 0 5px;
-  border: 1px solid #ccc;
+form input:focus {
+  border-color: #6c4ab6;
+  outline: none;
 }
 
-#add-btn {
-  background: #a076f9;
+form button[type="submit"] {
+  background-color: #6c4ab6;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 0 5px 5px 0;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-ul {
-  list-style: none;
+form button[type="submit"]:hover {
+  background-color: #5935a2;
 }
 
-li {
-  background: #f2f2f2;
-  margin: 5px 0;
-  padding: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-}
-
-.delete-btn {
-  background: #f44336;
-  color: white;
-  border: none;
-  padding: 5px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.footer {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#clear-btn {
-  background: #a076f9;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+.bookmark {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 15px;
+  border-radius: 8px;
+  position: relative;
+  width: 240px;
+  text-align: left;
 }

@@ -1,51 +1,82 @@
-const input = document.getElementById(`todo-input`);
-const addBtn = document.getElementById(`add-btn`);
-const todoList = document.getElementById(`todo-list`);
-const pendingTasks = document.getElementById(`pending-tasks`);
-const clearBtn = document.getElementById(`clear-btn`);
+let showModalBtn = document.getElementById(`show-modal`);
+let closeModalBtn = document.getElementById(`close-btn`);
+let modal = document.getElementById(`modal`);
+let form = document.getElementById(`bookmarks-form`);
+let nameInput = document.getElementById(`website-name`);
+let urlInput = document.getElementById(`website-url`);
+let bookmarksContainer = document.getElementById(`bookmarks-container`);
 
-var todos = JSON.parse(localStorage.getItem(`todos`)) || [];
+let bookmarks = JSON.parse(localStorage.getItem(`bookmarks`)) || [];
 
-function saveTodo() {
-  localStorage.setItem(`todos`, JSON.stringify(todos));
+function saveBookmarks() {
+  localStorage.setItem(`bookmarks`, JSON.stringify(bookmarks));
 }
 
-function renderTodos() {
-  todoList.innerHTML = ``;
-  todos.forEach(function (todo, index) {
-    let li = document.createElement(`li`);
-    li.textContent = todo;
+function deleteBookmark(index) {
+  bookmarks.splice(index, 1);
+  saveBookmarks();
+  renderBookmarks();
+}
+
+function renderBookmarks() {
+  bookmarksContainer.innerHTML = ``;
+  bookmarks.forEach(function (bookmark, index) {
+    let div = document.createElement(`div`);
+    div.className = `bookmark`;
+
+    let a = document.createElement(`a`);
+    a.href = bookmark.url;
+    a.target = `_blank`;
+    a.innerHTML = bookmark.name;
 
     let deleteBtn = document.createElement(`button`);
-    deleteBtn.textContent = "🗑️";
-    deleteBtn.className = `delete-btn`;
+    deleteBtn.className = `delete`;
+    deleteBtn.innerHTML = `&times;`;
     deleteBtn.onclick = function () {
-      todos.splice(index, 1);
-      saveTodo();
-      renderTodos();
+      deleteBookmark(index);
     };
-    li.appendChild(deleteBtn);
-    todoList.appendChild(li);
+
+    div.appendChild(deleteBtn);
+    div.appendChild(a);
+    bookmarksContainer.appendChild(div);
   });
-  pendingTasks.textContent = `You have ${todos.length} pending tasks`;
 }
 
-addBtn.onclick = function () {
-  let task = input.value.trim();
-  if (task) {
-    todos.push(task);
-    input.value = ``;
-    saveTodo();
-    renderTodos();
+function handleFormSubmit(event) {
+  event.preventDefault();
+
+  let name = nameInput.value.trim();
+  let url = urlInput.value.trim();
+
+  if (name === "" || url === "") {
+    alert(`please enter both name and URl`);
+    return;
   }
-};
 
-clearBtn.onclick = function () {
-  todos = [];
-  saveTodo();
-  renderTodos();
-};
+  if (!url.startsWith(`http`)) {
+    url = `http://${url}`;
+  }
 
-window.onload = function () {
-  renderTodos();
-};
+  bookmarks.push({
+    name: name,
+    url: url,
+  });
+  saveBookmarks();
+  renderBookmarks();
+
+  form.reset();
+  modal.style.display = `none`;
+}
+
+function showModal() {
+  modal.style.display = `flex`;
+}
+
+function closeModal() {
+  modal.style.display = `none`;
+}
+
+showModalBtn.onclick = showModal;
+closeModalBtn.onclick = closeModal;
+form.onsubmit = handleFormSubmit;
+window.onload = renderBookmarks;
